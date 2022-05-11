@@ -10,6 +10,11 @@ namespace MercadoSaoDomingos
     {
         static void Main(string[] args)
         {
+
+            Controlgeral geral = new Controlgeral();
+            geral.Executar();
+            Console.ReadLine();
+           
         }
     }
 }

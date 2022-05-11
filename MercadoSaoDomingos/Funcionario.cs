@@ -139,7 +139,7 @@ namespace MercadoSaoDomingos
 
         public void Cadastrar(int codigo, string nome, string telefone, string endereco, string cpf, string sexo, double salario, string cargo)
         {
-            AcessarCodigoFuncionario = codigoFuncionario;
+            AcessarCodigoFuncionario = codigo;
             AcessarNome = nome;
             AcessarTelefone = telefone;
             AcessarEndereco = endereco;

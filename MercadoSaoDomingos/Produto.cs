@@ -137,7 +137,7 @@ namespace MercadoSaoDomingos
             }
         }//fim do acessar valor total gasto
 
-        public void Casdatrar(int codigoProduto, string descricao, int quantidade, string unidadeDeMedida, double valorUnitario, DateTime dataDeFabricacao, DateTime dataDeValidade, string tipoDeProduto)
+        public void Cadastrar(int codigoProduto, string descricao, int quantidade, string unidadeDeMedida, double valorUnitario, DateTime dataDeFabricacao, DateTime dataDeValidade, string tipoDeProduto)
         {
             AcessarCodigoProduto = codigoProduto;
             AcessarDescricao = descricao;

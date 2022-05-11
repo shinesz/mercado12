@@ -43,9 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompraEVenda.cs" />
     <Compile Include="Cliente.cs" />
     <Compile Include="ControlCliente.cs" />
     <Compile Include="ControlFuncionario.cs" />
+    <Compile Include="Controlgeral.cs" />
+    <Compile Include="ControlProduto.cs" />
     <Compile Include="Funcionario.cs" />
     <Compile Include="Produto.cs" />
     <Compile Include="Program.cs" />

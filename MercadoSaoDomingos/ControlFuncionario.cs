@@ -69,7 +69,7 @@ namespace MercadoSaoDomingos
                         Console.WriteLine("Informe um sexo: ");
                         string sexo = Console.ReadLine();
                         Console.WriteLine("Informe o salario atual: ");
-                        int salario = Convert.ToInt32(Console.ReadLine());
+                        double salario = Convert.ToDouble(Console.ReadLine());
                         Console.WriteLine("Informe o cargo atual: ");
                         string cargo = Console.ReadLine();
                         //Passei o dado por parâmetro para o método
@@ -132,30 +132,32 @@ namespace MercadoSaoDomingos
                         Console.WriteLine("Informe um código: ");
                         codigoFuncionario = Convert.ToInt32(Console.ReadLine());
 
-                        Console.WriteLine("Informe uma Quantidade de compras: ");
-                        salario = Convert.ToDouble(Console.ReadLine());
+                        Console.WriteLine("Informe seu salário: ");
+                         salario = Convert.ToDouble(Console.ReadLine());
                         //Utilizar o método da classe model
                         Console.WriteLine(funcionario.AtualizarSalario(codigoFuncionario, salario));
+                        break;
+
+                    case 8:
+                        //Pedir para o usuário digitar o código e o novo nome
+                        Console.WriteLine("Informe um código: ");
+                        codigoFuncionario = Convert.ToInt32(Console.ReadLine());
+
+                        Console.WriteLine("Informe seu cargo: ");
+                        cargo = Console.ReadLine();
+                        //Utilizar o método da classe model
+                        Console.WriteLine(funcionario.AtualizarCargo(codigoFuncionario, cargo));
                         break;
 
                     case 9:
                         //Pedir para o usuário digitar o código e o novo nome
                         Console.WriteLine("Informe um código: ");
-                        codigoCliente = Convert.ToInt32(Console.ReadLine());
-
-                        Console.WriteLine("Informe uma Quantidade de compras: ");
-                        valorTotalGasto = Convert.ToDouble(Console.ReadLine());
-                        //Utilizar o método da classe model
-                        Console.WriteLine(cliente.AtualizarValorTotalGasto(codigoCliente, valorTotalGasto));
-                        break;
-
-                    case 10:
-                        //Pedir para o usuário digitar o código e o novo nome
-                        Console.WriteLine("Informe um código: ");
-                        codigoCliente = Convert.ToInt32(Console.ReadLine());
+                        codigoFuncionario = Convert.ToInt32(Console.ReadLine());
                         //Utiliza o método
-                        Console.WriteLine(cliente.Excluir(codigoCliente));
+                        Console.WriteLine(funcionario.Excluir(codigoFuncionario));
                         break;
+
+                       
                     default:
                         Console.WriteLine("Opção escolhida não é válida! Tente novamente!");
                         break;
@@ -167,5 +169,3 @@ namespace MercadoSaoDomingos
 
 
 
-    }
-}

@@ -79,6 +79,7 @@ namespace MercadoSaoDomingos
                         cliente.Cadastrar(codigoCliente,nome,telefone,endereco,cpf,sexo,email, quantidadeDeCompras , valorTotalGasto );
                         //Mostro o dado em tela
                         Console.WriteLine("Cadastrado com Sucesso!");
+                        Console.ReadLine();
                         break;
                     case 2:
                         //Pedir para o usuário digitar um código
