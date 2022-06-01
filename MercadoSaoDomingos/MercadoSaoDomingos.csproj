@@ -51,8 +51,10 @@
     <Compile Include="ControlFuncionario.cs" />
     <Compile Include="Controlgeral.cs" />
     <Compile Include="ControlProduto.cs" />
+    <Compile Include="controlProduto2.cs" />
     <Compile Include="DAO.cs" />
     <Compile Include="Funcionario.cs" />
+    <Compile Include="Gerente.cs" />
     <Compile Include="Produto.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

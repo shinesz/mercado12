@@ -34,7 +34,7 @@ namespace MercadoSaoDomingos
             Console.Clear();//Limpar a tela do console
             Console.WriteLine("\n\nEscolha uma das opções abaixo:\n\n" +
                                "1. Clientes\n" +
-                               "2. Funcionarios\n" +
+                               "2. Acesso gerente\n" +
                                "3. Produtos e Estoque \n" +
                                "4. Compras \n" +
                                "0. Sair");
@@ -62,8 +62,8 @@ namespace MercadoSaoDomingos
 
                     case 2:
 
-                        ControlFuncionario funcionario = new ControlFuncionario();
-                        funcionario.Executar();
+                        Gerente gerente= new Gerente();
+                        gerente.Executar();
                         Console.ReadLine();
                         break;
 

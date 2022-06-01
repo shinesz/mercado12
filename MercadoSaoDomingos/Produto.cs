@@ -228,8 +228,21 @@ namespace MercadoSaoDomingos
                 return "Algo deu errado!\n\n" + e;
             }
         }//fim do deletar
+        public string ConsultarEstoque()
+        {
+            //Preencher os vetores
+            PreencherVetor();
+            msg = "";
+            for (i = 0; i < contador; i++)
+            {
+                msg += "Código: " + codigoProduto[i] +
+                       ", Quantidade: " + quantidade[i] +
+                       ", Valor Unitário : " + valorUnitario[i] +
+                       "\n\n";
+            }//fim do for
 
-     
+            return msg;
+        }//fim do método consultarTudo
 
     }
 }

@@ -21,10 +21,12 @@ namespace MercadoSaoDomingos
         public string comando;
         public string resultado;
         public int i;
+        public double a;
         public string msg;
         public int contador;
+        public int cod;
 
-        //---------------------- vetores cliente -------------------------
+        //---------------------- vetores funcionario -------------------------
 
         public int[] codigoFuncionario;//Vetor de código
         public string[] nomeCompleto;//Vetor de nome
@@ -32,7 +34,7 @@ namespace MercadoSaoDomingos
         public string[] endereco;//Vetor de endereço
         public string[] cpf; // vetor cpf 
         public string[] sexo; // vetor sexo 
-        public double[] salario; // vetor valor
+        public double[] horaTrabalhada; // vetor valor
         public string [] cargo; // quantidade 
 
         //----------------------------------------------------------------
@@ -61,14 +63,14 @@ namespace MercadoSaoDomingos
         }//fim do método construtor
 
         //Método para inserir dados no BD
-        public void Inserir(string nomeCompleto, string telefone, string endereco, string cpf, string sexo, string cargo,double salario)
+        public void Inserir(string nomeCompleto, string telefone, string endereco, string cpf, string sexo, string cargo,double horaTrabalhada)
         {
             try
             {
 
                 //Preparo o código para inserção no banco
-                dados = "('','" + nomeCompleto + "','" + telefone + "','" + endereco + "','" + cpf + "','" + sexo + "','" + cargo + "','" + salario + "')";
-                comando = "Insert into Funcionario(codigoFuncionario, nomeCompleto, telefone, endereco, cpf, sexo, cargo, salario) values" + dados;
+                dados = "('','" + nomeCompleto + "','" + telefone + "','" + endereco + "','" + cpf + "','" + sexo + "','" + cargo + "','" + horaTrabalhada + "')";
+                comando = "Insert into Funcionario(codigoFuncionario, nomeCompleto, telefone, endereco, cpf, sexo, cargo, horaTrabalhada) values" + dados;
 
 
                 //Executar o comando de inserção no banco de dados
@@ -95,7 +97,7 @@ namespace MercadoSaoDomingos
             cpf = new string[100];
             sexo = new string[100];
             cargo = new string[100];
-            salario = new double[100];
+            horaTrabalhada = new double[100];
 
 
 
@@ -109,7 +111,7 @@ namespace MercadoSaoDomingos
                 cpf[i] = "";
                 sexo[i] = "";
                 cargo[i] = "";
-                salario[i] = 0;
+                horaTrabalhada[i] = 0;
 
 
 
@@ -135,7 +137,7 @@ namespace MercadoSaoDomingos
                 cpf[i] = leitura["cpf"] + "";
                 sexo[i] = leitura["sexo"] + "";
                 cargo[i] = leitura["cargo"] + "";
-                salario[i] = Convert.ToInt32(leitura["salario"]);
+                horaTrabalhada[i] = Convert.ToInt32(leitura["horaTrabalhada"]);
                 i++;
                 contador++;
             }//Fim do while
@@ -159,7 +161,7 @@ namespace MercadoSaoDomingos
                        ", CPF : " + cpf[i] +
                        ", Sexo: " + sexo[i] +
                        ", Cargo: " + cargo[i] +
-                       ", Salário : " + salario[i] +
+                       ", Salário : " + horaTrabalhada[i] +
                        "\n\n";
             }//fim do for
 
@@ -180,7 +182,7 @@ namespace MercadoSaoDomingos
                        ", CPF: " + cpf[i] +
                        ", Sexo: " + sexo[i] +
                        ", Cargo: " + cargo[i] +
-                       ", Salário: " + salario[i] +
+                       ", Hora trabalhada : " + horaTrabalhada[i] +
                        "\n\n";
                     return msg;
                 }
@@ -220,6 +222,26 @@ namespace MercadoSaoDomingos
                 return "Algo deu errado!\n\n" + e;
             }
         }//fim do deletar
+
+        public string CalcularSalario(int cod)
+        {
+            PreencherVetor();
+            for (i = 0; i < contador; i++)
+            { 
+                if (codigoFuncionario[i] == cod)
+                {
+                    a = horaTrabalhada[i] * 60;
+                    msg = "RS" + a;
+                    return msg;
+                }
+            }
+            return "Este código é invalido";
+                 
+
+        }//fim do deletar
+      
+        
+
 
     }
 }

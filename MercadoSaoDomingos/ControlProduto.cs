@@ -38,7 +38,7 @@ namespace MercadoSaoDomingos
                             "3. Consultar por Código\n" +
                             "4. Atualizar\n" +
                             "5. Excluir\n" +
-                            "6. consultar estoque\n" +
+                        
 
                             "0. Sair");
             AcessarOpcao = Convert.ToInt32(Console.ReadLine());
@@ -109,7 +109,7 @@ namespace MercadoSaoDomingos
                         Console.WriteLine(conexao.Deletar(codigoProduto));
                         Console.ReadLine();
                         break;
-                       
+                  
 
                     default:
                         Console.WriteLine("Opção escolhida não é válida! Tente novamente!");

@@ -26,14 +26,16 @@ namespace MercadoSaoDomingos
         public string comando;
         public string resultado;
         public int i;
+        public double a;
         public string msg;
         public int contador;
+        public double salario;
         
         //---------------------- vetores compra e venda -------------------------
 
         public int[] codigoCompra;//Vetor de código
         public int[] quantidade;//Vetor de quantidade
-        public string[] cpf; // veto cpf 
+        public string[] cpf; // vetor cpf 
         public double[] valor; // vetor valor
        
         //----------------------------------------------------------------
@@ -195,34 +197,46 @@ namespace MercadoSaoDomingos
             }
         }//fim do deletar
 
-        
-        public int Contar()
-        {
-            for (i = 0; i < ; i++)
-            { }
-                return i++;
-        }
 
-
-        public string ConsultarCpf(string cod)
+        public double ConsultarValorTotal()
         {
 
-            PreencherVetor();
-            for (i = 0; i < contador; i++)
-            {
-                if (cpf[i] == cod)
-                {
-                    msg = " Código: " + codigoCompra[i] +
-                       "\n CPF: " + cpf[i] +
-                       "\n Quantidade de compras: " + Contar() + 
-                       "\n Valor : " + valor[i] +
-                       "\n\n";
-                    return msg;
-                }
-            }//fim do for
-            return "Código informado não encontrado!";
+            a = valor[i] + i++;
+            return a; 
+
+         
         }//fim do consultar
 
+        public string salarioGerente(int cod)
+        {
+
+           PreencherVetor();
+           for (i = 0; i < contador; i++)
+           {
+                if (codigoCompra[i] == cod)
+                {
+                     
+                   if (ConsultarValorTotal() > 10000)
+                   {
+
+                        salario = (a * 20)/100;
+                        msg = "" + salario;
+                        return msg;
+
+                    }
+                    else
+                    {
+                        salario = (a * 5)/100;
+                        msg = "" + salario;
+                        return msg;
+                    }
+                    
+                }
+           }//fim do for
+         
+            return "Código informado não encontrado!";
+
+        }//fim do salario 
 
 
 

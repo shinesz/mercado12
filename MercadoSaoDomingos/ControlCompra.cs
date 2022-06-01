@@ -87,10 +87,10 @@ namespace MercadoSaoDomingos
                         Console.WriteLine(conexao.Atualizar(codigoCompra, campo, novoDado));
                         break;
                     case 5:
-                        Console.WriteLine("Informe o cpf que deseja consultar");
-                        string cod = Console.ReadLine();
+                        Console.WriteLine("Informe o codigo do cliente que deseja consultar");
+                        int cod = Convert.ToInt32(Console.ReadLine());
                         //Mostrar o resultado em tela
-                        Console.WriteLine(conexao.ConsultarCpf(cod));
+                        Console.WriteLine(conexao.salarioGerente(cod));
                         break;
                     case 6:
                         Console.WriteLine("Informe o código que deseja apagar");

@@ -37,7 +37,8 @@ namespace MercadoSaoDomingos
                               "2. Consultar Tudo\n" +
                               "3. Consultar por Código\n" +
                               "4. Atualizar\n" +
-                              "5. Excluir\n" +
+                              "5. Visualizar salario\n" +
+                              "6. Excluir\n" +
                               "0. Sair");
             AcessarOpcao = Convert.ToInt32(Console.ReadLine());
         }//fim do método menu
@@ -66,12 +67,12 @@ namespace MercadoSaoDomingos
                         string cpf = Console.ReadLine();
                         Console.WriteLine("Informe um sexo: ");
                         string sexo = Console.ReadLine();
-                        Console.WriteLine("Informe um cargo: ");
+                        Console.WriteLine("Informe um cargo : horista, analista ou gerente : ");
                         string cargo = Console.ReadLine();
-                        Console.WriteLine("Informe o salario: ");
-                        double salario = Convert.ToDouble(Console.ReadLine());
+                        Console.WriteLine("Informe as horas trabalhadas: ");
+                        double horaTrabalhada = Convert.ToDouble(Console.ReadLine());
                         //Passei o dado por parâmetro para o método
-                        conexao.Inserir(nomeCompleto, telefone, endereco, cpf, sexo, cargo, salario);
+                        conexao.Inserir(nomeCompleto, telefone, endereco, cpf, sexo, cargo, horaTrabalhada);
                         //Mostro o dado em tela
 
                         break;
@@ -94,8 +95,14 @@ namespace MercadoSaoDomingos
                         //utilizar os dados acima no método atualizar
                         Console.WriteLine(conexao.Atualizar(codigoFuncionario, campo, novoDado));
                         break;
-
                     case 5:
+                        Console.WriteLine("Informe o código que deseja consultar o salario");
+                        codigoFuncionario = Convert.ToInt32(Console.ReadLine());
+                        //Mostrar o resultado em tela
+                        Console.WriteLine(conexao.CalcularSalario(codigoFuncionario));
+                        break;
+
+                    case 6:
                         Console.WriteLine("Informe o código que deseja apagar");
                         codigoFuncionario = Convert.ToInt32(Console.ReadLine());
                         //Mostrar o resultado em tela
