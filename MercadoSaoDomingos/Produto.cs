@@ -3,290 +3,233 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data;
+using MySql.Data.MySqlClient;
 
 namespace MercadoSaoDomingos
 {
     class Produto
     {
-        // declarar variaveis 
-        private int codigoProduto;
-        private string descricao;
-        private int quantidade;
-        private string unidadeDeMedida;
-        private double valorUnitario;
-        private DateTime dataDeFabricacao;
-        private DateTime dataDeValidade;
-        private string tipoDeProduto;
+        public MySqlConnection conexao;
+
+
+        //Modificar a estrutura de data
+
+        //
+
+        public string dados;
+        public string comando;
+        public string resultado;
+        public int i;
+        public string msg;
+        public int contador;
+
+        //---------------------- vetores cliente -------------------------
+
+        public int[] codigoProduto;//Vetor de código
+        public string[] descricao;//Vetor de nome
+        public int[] quantidade;//Vetor de telefone
+        public string[] unidadeDeMedida;//Vetor de endereço
+        public double[] valorUnitario; // vetor cpf 
+        public DateTime[] dataDeFabricacao; // vetor sexo 
+        public DateTime[] dataDeValidade; // vetor valor
+        public string[] tipoDeProduto;// quantidade 
+
+        //----------------------------------------------------------------
+
+
+
+        //
+
+
 
         public Produto()
         {
-            AcessarCodigoProduto = 0;
-            AcessarDescricao = "";
-            AcessarQuantidade= 0;
-            AcessarUnidadeDeMedida = "";
-            AcessarValorUnitario = 0;
-            AcessarDataDeFabricacao = new DateTime();
-            AcessarDataDeValidade = new DateTime();
-            AcessarTipoDeProduto= "";
+            //Script para conexão do banco de dados
+            conexao = new MySqlConnection("server=localhost;DataBase=mercadoSaoDomingos;Uid=root;Password=;");
+            try
+            {
+                conexao.Open();//Tentando conectar ao BD
+                Console.WriteLine("Conectado com sucesso!");
 
-        }// fim construtor
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Algo deu errado!\n\n" + e);//Mostrar o erro em tela
+                conexao.Close();//Fechar a conexão com o banco de dados
+            }
+        }//fim do método construtor
 
-
-        //desenvolver os metodos gets e sets
-
-        public int AcessarCodigoProduto
+        //Método para inserir dados no BD
+        public void Inserir(string descricao, int quantidade, string unidadeDeMedida, double valorUnitario, DateTime dataDeFabricacao, DateTime dataDeValidade, string tipoDeProduto)
         {
-            get
+            try
             {
 
-                return codigoProduto;
+                MySqlParameter parameter2 = new MySqlParameter();
+                parameter2.ParameterName = "@Date";
+                parameter2.MySqlDbType = MySqlDbType.Date;
+                parameter2.Value = dataDeFabricacao.Year + "-" + dataDeFabricacao.Month + "-" + dataDeFabricacao.Day;
+
+
+                MySqlParameter parameter1 = new MySqlParameter();
+                parameter1.ParameterName = "@Date";
+                parameter1.MySqlDbType = MySqlDbType.Date;
+                parameter1.Value = dataDeValidade.Year + "-" + dataDeValidade.Month + "-" + dataDeValidade.Day;
+
+                //Preparo o código para inserção no banco
+                dados = "('','" + descricao + "','" + quantidade + "','" + unidadeDeMedida + "','" + valorUnitario + "','" + parameter2.Value + "','" + parameter1.Value + "','" + tipoDeProduto + "')";
+                comando = "Insert into Produto(codigoProduto, descricao, quantidade, unidadeDeMedida, valorUnitario, dataDeFabricacao, dataDeValidade, tipoDeProduto) values" + dados;
+
+
+                //Executar o comando de inserção no banco de dados
+                MySqlCommand sql = new MySqlCommand(comando, conexao);
+                resultado = "" + sql.ExecuteNonQuery();//Executa o insert no BD
+                Console.WriteLine(resultado + " Linhas Afetadas");
             }
-            set
+            catch (Exception e)
             {
-                this.codigoProduto = value;
+                Console.WriteLine("Algo deu errado!\n\n" + e);
+                Console.ReadLine();//Manter o programa aberto
             }
-        }//fim do acessar codigo
-        public string AcessarDescricao
+        }//fim do método inserir
+
+        public void PreencherVetor()
         {
-            get
-            {
+            string query = "select * from Produto";//Coletar os dados do BD
 
-                return descricao;
-            }
-            set
-            {
-                this.descricao = value;
-            }
-        }//fim do acessar nome
-        public int AcessarQuantidade
-        {
-            get
-            {
-
-                return quantidade;
-            }
-            set
-            {
-                this.quantidade = value;
-            }
-        }//fim do acessar telefone
-
-        public string AcessarUnidadeDeMedida
-        {
-            get
-            {
-
-                return unidadeDeMedida;
-            }
-            set
-            {
-                this.unidadeDeMedida = value;
-            }
-        }//fim do acessar endereco
-
-        public double AcessarValorUnitario
-        {
-            get
-            {
-
-                return valorUnitario;
-            }
-            set
-            {
-                this.valorUnitario= value;
-            }
-        }//fim do acessar sexo
-
-        public DateTime AcessarDataDeFabricacao
-        {
-            get
-            {
-
-                return dataDeFabricacao;
-            }
-            set
-            {
-                this.dataDeFabricacao = value;
-            }
-        }//fim do acessar cpf
-
-
-        public DateTime AcessarDataDeValidade
-        {
-            get
-            {
-
-                return dataDeValidade;
-            }
-            set
-            {
-                this.dataDeValidade = value;
-            }
-        }//fim do acessar quantidade de compras
-
-        public string AcessarTipoDeProduto
-        {
-            get
-            {
-
-                return tipoDeProduto;
-            }
-            set
-            {
-                this.tipoDeProduto = value;
-            }
-        }//fim do acessar valor total gasto
-
-        public void Cadastrar(int codigoProduto, string descricao, int quantidade, string unidadeDeMedida, double valorUnitario, DateTime dataDeFabricacao, DateTime dataDeValidade, string tipoDeProduto)
-        {
-            AcessarCodigoProduto = codigoProduto;
-            AcessarDescricao = descricao;
-            AcessarQuantidade = quantidade;
-            AcessarUnidadeDeMedida = unidadeDeMedida;
-            AcessarValorUnitario = valorUnitario;
-            AcessarDataDeFabricacao = dataDeFabricacao;
-            AcessarDataDeValidade = dataDeValidade;
-            AcessarTipoDeProduto = tipoDeProduto;
+            //Instanciar
             
-        }
+            codigoProduto = new int[100];
+            descricao = new string[100];
+            quantidade = new int [100];
+            unidadeDeMedida = new string[100];
+            valorUnitario = new double[100];
+            dataDeFabricacao= new DateTime [100];
+            dataDeValidade = new DateTime[100];
+            tipoDeProduto = new string[100];
 
-        public string Consultar(int codigoProduto)
+
+
+            //Preencher com valores iniciais
+            for (i = 0; i < 100; i++)
+            {
+                codigoProduto[i] = 0;
+                descricao[i] = "";
+                quantidade[i] = 0;
+                unidadeDeMedida[i] = "";
+                valorUnitario[i] = 0;
+                dataDeFabricacao[i] = new DateTime();
+                dataDeValidade[i] = new DateTime();
+                tipoDeProduto[i] = "";
+
+
+
+            }//fim do for
+
+            //Criando o comando para consultar no BD
+            MySqlCommand coletar = new MySqlCommand(query, conexao);
+            //Leitura dos dados do banco
+            MySqlDataReader leitura = coletar.ExecuteReader();
+
+            i = 0;
+            contador = 0;
+            while (leitura.Read())
+            {
+                codigoProduto[i] = Convert.ToInt32(leitura["codigoProduto"]);
+                descricao[i] = leitura["descricao"] + "";
+                quantidade[i] = Convert.ToInt32(leitura["quantidade"]);
+                unidadeDeMedida[i] = leitura["unidadeDeMedida"] + "";
+                valorUnitario[i] = Convert.ToInt32(leitura["valorUnitario"]);
+                dataDeFabricacao[i] = Convert.ToDateTime(leitura["dataDeFabricacao"]);
+                dataDeValidade[i] = Convert.ToDateTime(leitura["dataDeValidade"]);
+                tipoDeProduto[i] = leitura["tipoDeProduto"] + "";
+                i++;
+                contador++;
+            }//Fim do while
+
+            //Fechar a leitura de dados no banco
+            leitura.Close();
+        }//fim do método de preenchimento do vetor
+
+        //Método que consulta TODOS OS DADOS no banco de dados
+        public string ConsultarTudo()
         {
-            if (AcessarCodigoProduto == codigoProduto)
+            //Preencher os vetores
+            PreencherVetor();
+            msg = "";
+            for (i = 0; i < contador; i++)
             {
-                return "Código: " + AcessarCodigoProduto +
-                       "\nDescrição : " + AcessarDescricao +
-                       "\nQuantidade: " + AcessarQuantidade +
-                       "\nUnidade de medida: " + AcessarUnidadeDeMedida +
-                       "\nValor unitário: " + AcessarValorUnitario +
-                       "\nData de Fabricação: " + AcessarDataDeFabricacao +
-                       "\nData de Validade: " + AcessarDataDeValidade +
-                       "\nTipo de produto:" + AcessarTipoDeProduto;
-            }
-            else
-            {
-                return "Código Informado Não é Valido!";
-            }
-        }//fim do método consultar
+                msg += "Código: " + codigoProduto[i] +
+                       ", Descricao: " + descricao[i] +
+                       ", Quantidade: " + quantidade[i] +
+                       ", Unidade De Medida: " + unidadeDeMedida[i] +
+                       ", Valor Unitário : " + valorUnitario[i] +
+                       ", Data De Fabricação: " + dataDeFabricacao[i] +
+                       ", Data De Validade: " + dataDeValidade[i] +
+                       ", Tipo de Produto : " + tipoDeProduto[i] +
+                       "\n\n";
+            }//fim do for
 
-        public string AtualizarDescricao(int codigoProduto, string descricao)
+            return msg;
+        }//fim do método consultarTudo
+
+        public string ConsultarTudo(int cod)
         {
-            if (AcessarCodigoProduto == codigoProduto)
+            PreencherVetor();
+            for (i = 0; i < contador; i++)
             {
-                AcessarDescricao = descricao;
-                return "Descrição Atualizada com Sucesso!";
-            }
-            else
-            {
-                return "Código informado não é valido!";
-            }
-        
-        }//Fim do método atualizarDescricao
+                if (codigoProduto[i] == cod)
+                {
+                    msg = "Código: " + codigoProduto[i] +
+                       ", Descricao: " + descricao[i] +
+                       ", Quantidade: " + quantidade[i] +
+                       ", Unidade De Medida: " + unidadeDeMedida[i] +
+                       ", Valor Unitário : " + valorUnitario[i] +
+                       ", Data De Fabricação: " + dataDeFabricacao[i] +
+                       ", Data De Validade: " + dataDeValidade[i] +
+                       ", Tipo de Produto : " + tipoDeProduto[i] +
+                       "\n\n";
+                    return msg;
+                }
+            }//fim do for
+            return "Código informado não encontrado!";
+        }//fim do consultar
 
-        public string AtualizarQuantidade(int codigoProduto, int quantidade)
+        public string Atualizar(int codigoProduto, string campo, string novoDado)
         {
-            if (AcessarCodigoProduto == codigoProduto)
+            try
             {
-                AcessarQuantidade = quantidade ;
-                return "Quantidade atualizada com Sucesso!";
+                string query = "update Produto set " + campo + " = '" + novoDado + "' where codigoProduto = '" + codigoProduto + "'";
+                //Executar o comando
+                MySqlCommand sql = new MySqlCommand(query, conexao);
+                string resultado = "" + sql.ExecuteNonQuery();
+                return resultado + "Linha Afetada";
             }
-            else
+            catch (Exception e)
             {
-                return "Código digitado não é válido!";
+                return "Algo deu errado!\n\n" + e;
             }
-        }//fim do método atualizar telefone
+        }//fim do método Atualizar
 
-        public string AtualizarUnidadeDeMedida(int codigoProduto, string unidadeDeMedida)
+        public string Deletar(int codigoProduto)
         {
-            if (AcessarCodigoProduto == codigoProduto)
+            try
             {
-                AcessarUnidadeDeMedida = unidadeDeMedida;
-                return " Unidade de medida atualizada com sucesso!";
+                string query = "delete from Produto where codigoProduto = '" + codigoProduto + "'";
+                //Preparar o comando
+                MySqlCommand sql = new MySqlCommand(query, conexao);
+                string resultado = "" + sql.ExecuteNonQuery();
+                //Mostrar a mensagem em tela
+                return resultado + "Linha Afetada";
             }
-            else
+            catch (Exception e)
             {
-                return "Código informado não é válido!";
+                return "Algo deu errado!\n\n" + e;
             }
-        }//fim do método Atualizar Endereço
+        }//fim do deletar
 
+     
 
-        public string AtualizarValorUnitario(int codigoProduto, double valorUnitario)
-        {
-            if (AcessarCodigoProduto == codigoProduto)
-            {
-                AcessarValorUnitario = valorUnitario;
-                return "Valor Unitario atualizado com sucesso!";
-            }
-            else
-            {
-                return "Código informado não é válido!";
-            }
-        }//fim atualizar sexo
-
-
-
-        public string AtualizarDataDeFabricacao(int codigoProduto, DateTime dataDeFabricacao)
-        {
-            if (AcessarCodigoProduto == codigoProduto)
-            {
-                AcessarDataDeFabricacao = dataDeFabricacao;
-                return "Data de fabricação atualizada com sucesso!";
-            }
-            else
-            {
-                return "Código informado não é válido!";
-            }
-        }//fim atualizar quantidade 
-
-
-
-        public string AtualizarDataDeValidade(int codigoProduto, DateTime dataDeValidade)
-        {
-            if (AcessarCodigoProduto == codigoProduto)
-            {
-                AcessarDataDeValidade = dataDeValidade;
-                return "Data de validade atualizada com sucesso!";
-            }
-            else
-            {
-                return "Código informado não é válido!";
-            }
-        }//fim atualizar quantidade
-        public string AtualizarTipoDeProduto(int codigoProduto, string tipoDeProduto)
-        {
-            if (AcessarCodigoProduto == codigoProduto)
-            {
-                AcessarTipoDeProduto = tipoDeProduto;
-                return "Tipo De Produto atualizado com sucesso!";
-            }
-            else
-            {
-                return "Código informado não é válido!";
-            }
-        }//fim atualizar quantidade 
-
-        
-
-
-        public string Excluir(int codigoProduto)
-        {
-            if (AcessarCodigoProduto == codigoProduto)
-            {
-                AcessarCodigoProduto = 0;
-                AcessarDescricao = "";
-                AcessarQuantidade = 0;
-                AcessarUnidadeDeMedida = "";
-                AcessarValorUnitario = 0;
-                AcessarDataDeFabricacao = new DateTime();
-                AcessarDataDeValidade = new DateTime();
-                AcessarTipoDeProduto = "";
-
-                return "Dados excluídos com sucesso!";
-            }
-            else
-            {
-                return "Código informado não é válido!";
-            }
-        }//fim do excluir
     }
 }

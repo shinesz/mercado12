@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -32,9 +33,10 @@ namespace MercadoSaoDomingos
         {
             Console.Clear();//Limpar a tela do console
             Console.WriteLine("\n\nEscolha uma das opções abaixo:\n\n" +
-                               "1. Cadastrar cliente\n" +
-                               "2. Cadastrar funcionario\n" +
-                               "3. Cadastrar produto \n" +
+                               "1. Clientes\n" +
+                               "2. Funcionarios\n" +
+                               "3. Produtos e Estoque \n" +
+                               "4. Compras \n" +
                                "0. Sair");
             AcessarOpcao = Convert.ToInt32(Console.ReadLine());
         }//fim do método menu
@@ -69,6 +71,12 @@ namespace MercadoSaoDomingos
 
                         ControlProduto produto = new ControlProduto();
                         produto.Executar();
+                        Console.ReadLine();
+                        break;
+                    case 4:
+
+                        ControlCompra compra = new ControlCompra();
+                        compra.Executar();
                         Console.ReadLine();
                         break;
 

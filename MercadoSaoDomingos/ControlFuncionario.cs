@@ -8,11 +8,13 @@ namespace MercadoSaoDomingos
 {
     class ControlFuncionario
     {
-        Funcionario funcionario;//Conectando a model e a control
-        private int opcao;
+        Funcionario conexao;//Criando a variável conexao
+        public int opcao;
+
         public ControlFuncionario()
         {
-            funcionario = new Funcionario();
+            conexao = new Funcionario();//Instanciando a variável conexao
+
         }//fim do construtor
 
         public int AcessarOpcao
@@ -27,19 +29,16 @@ namespace MercadoSaoDomingos
             }
         }//fim do acessarOpcao
         public void Menu()
+
         {
-            Console.Clear();//Limpar a tela do console
+
             Console.WriteLine("\n\nEscolha uma das opções abaixo:\n\n" +
-                               "1. Cadastrar\n" +
-                               "2. Consultar\n" +
-                               "3. Atualizar Nome\n" +
-                               "4. Atualizar Telefone\n" +
-                               "5. Atualizar Endereço\n" +
-                               "6. Atualizar Sexo\n" +
-                               "7. Atualizar Cargo\n" +
-                               "8. Atualizar Salario\n" +
-                               "9. Excluir\n" +
-                               "0. Sair");
+                              "1. Cadastrar\n" +
+                              "2. Consultar Tudo\n" +
+                              "3. Consultar por Código\n" +
+                              "4. Atualizar\n" +
+                              "5. Excluir\n" +
+                              "0. Sair");
             AcessarOpcao = Convert.ToInt32(Console.ReadLine());
         }//fim do método menu
 
@@ -56,10 +55,9 @@ namespace MercadoSaoDomingos
                         break;
                     case 1:
                         //Coletando o dado
-                        Console.WriteLine("Informe um código: ");
-                        int codigoFuncionario = Convert.ToInt32(Console.ReadLine());
+
                         Console.WriteLine("Informe um nome: ");
-                        string nome = Console.ReadLine();
+                        string nomeCompleto = Console.ReadLine();
                         Console.WriteLine("Informe um telefone: ");
                         string telefone = Console.ReadLine();
                         Console.WriteLine("Informe um endereço: ");
@@ -68,96 +66,41 @@ namespace MercadoSaoDomingos
                         string cpf = Console.ReadLine();
                         Console.WriteLine("Informe um sexo: ");
                         string sexo = Console.ReadLine();
-                        Console.WriteLine("Informe o salario atual: ");
-                        double salario = Convert.ToDouble(Console.ReadLine());
-                        Console.WriteLine("Informe o cargo atual: ");
+                        Console.WriteLine("Informe um cargo: ");
                         string cargo = Console.ReadLine();
+                        Console.WriteLine("Informe o salario: ");
+                        double salario = Convert.ToDouble(Console.ReadLine());
                         //Passei o dado por parâmetro para o método
-                        funcionario.Cadastrar(codigoFuncionario, nome, telefone, endereco, cpf, sexo, salario, cargo);
+                        conexao.Inserir(nomeCompleto, telefone, endereco, cpf, sexo, cargo, salario);
                         //Mostro o dado em tela
-                        Console.WriteLine("Cadastrado com Sucesso!");
+
                         break;
                     case 2:
-                        //Pedir para o usuário digitar um código
-                        Console.WriteLine("Informe um código: ");
-                        codigoFuncionario= Convert.ToInt32(Console.ReadLine());
-                        //Mostrar o resultado da operação
-                        Console.WriteLine(funcionario.Consultar(codigoFuncionario));
-                        Console.ReadLine();//Manter o prompt aberto
+                        Console.WriteLine(conexao.ConsultarTudo());
                         break;
                     case 3:
-                        //Pedir para o usuário digitar o código e o novo nome
-                        Console.WriteLine("Informe um código: ");
-                        codigoFuncionario = Convert.ToInt32(Console.ReadLine());
-
-                        Console.WriteLine("Informe um nome: ");
-                        nome = Console.ReadLine();
-                        //Utilizar o método da classe model
-                        Console.WriteLine(funcionario.AtualizarNome(codigoFuncionario, nome));
+                        Console.WriteLine("Informe o código do funcionario que deseja consultar: ");
+                        int codigoFuncionario = Convert.ToInt32(Console.ReadLine());
+                        //Mostrando o resultado em tela
+                        Console.WriteLine(conexao.ConsultarTudo(codigoFuncionario));
                         break;
                     case 4:
-                        //Pedir para o usuário digitar o código e o novo nome
-                        Console.WriteLine("Informe um código: ");
+                        Console.WriteLine("Informe o campo que deseja atualizar: ");
+                        string campo = Console.ReadLine();
+                        Console.WriteLine("Informe o novo dado para esse campo: ");
+                        string novoDado = Console.ReadLine();
+                        Console.WriteLine("Informe o código do funcionario que deseja atualizar: ");
                         codigoFuncionario = Convert.ToInt32(Console.ReadLine());
-
-                        Console.WriteLine("Informe um telefone: ");
-                        telefone = Console.ReadLine();
-                        //Utilizar o método da classe model
-                        Console.WriteLine(funcionario.AtualizarTelefone(codigoFuncionario, telefone));
+                        //utilizar os dados acima no método atualizar
+                        Console.WriteLine(conexao.Atualizar(codigoFuncionario, campo, novoDado));
                         break;
+
                     case 5:
-                        //Pedir para o usuário digitar o código e o novo nome
-                        Console.WriteLine("Informe um código: ");
+                        Console.WriteLine("Informe o código que deseja apagar");
                         codigoFuncionario = Convert.ToInt32(Console.ReadLine());
-
-                        Console.WriteLine("Informe um Endereço: ");
-                        endereco = Console.ReadLine();
-                        //Utilizar o método da classe model
-                        Console.WriteLine(funcionario.AtualizarEndereco(codigoFuncionario, endereco));
+                        //Mostrar o resultado em tela
+                        Console.WriteLine(conexao.Deletar(codigoFuncionario));
                         break;
-
-                    case 6:
-                        //Pedir para o usuário digitar o código e o novo nome
-                        Console.WriteLine("Informe um código: ");
-                        codigoFuncionario = Convert.ToInt32(Console.ReadLine());
-
-                        Console.WriteLine("Informe um Sexo: ");
-                        sexo = Console.ReadLine();
-                        //Utilizar o método da classe model
-                        Console.WriteLine(funcionario.AtualizarSexo(codigoFuncionario, sexo));
-                        break;
-
-                    case 7:
-                        //Pedir para o usuário digitar o código e o novo nome
-                        Console.WriteLine("Informe um código: ");
-                        codigoFuncionario = Convert.ToInt32(Console.ReadLine());
-
-                        Console.WriteLine("Informe seu salário: ");
-                         salario = Convert.ToDouble(Console.ReadLine());
-                        //Utilizar o método da classe model
-                        Console.WriteLine(funcionario.AtualizarSalario(codigoFuncionario, salario));
-                        break;
-
-                    case 8:
-                        //Pedir para o usuário digitar o código e o novo nome
-                        Console.WriteLine("Informe um código: ");
-                        codigoFuncionario = Convert.ToInt32(Console.ReadLine());
-
-                        Console.WriteLine("Informe seu cargo: ");
-                        cargo = Console.ReadLine();
-                        //Utilizar o método da classe model
-                        Console.WriteLine(funcionario.AtualizarCargo(codigoFuncionario, cargo));
-                        break;
-
-                    case 9:
-                        //Pedir para o usuário digitar o código e o novo nome
-                        Console.WriteLine("Informe um código: ");
-                        codigoFuncionario = Convert.ToInt32(Console.ReadLine());
-                        //Utiliza o método
-                        Console.WriteLine(funcionario.Excluir(codigoFuncionario));
-                        break;
-
-                       
                     default:
                         Console.WriteLine("Opção escolhida não é válida! Tente novamente!");
                         break;
@@ -166,6 +109,10 @@ namespace MercadoSaoDomingos
         }//fim do executar
     }//fim da control
 }//fim do projeto
+
+
+
+
 
 
 
